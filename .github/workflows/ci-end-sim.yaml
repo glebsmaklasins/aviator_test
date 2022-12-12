@@ -12,16 +12,5 @@ jobs:
       - name: sim jenkins deploy
         shell: bash
         run: sleep 10
-      - name: Set Success Status
-        run:   |
-                CURRENT_SHA=$(git rev-parse HEAD)
-                echo "CURRENT_SHA: $CURRENT_SHA"
-                curl --location --request POST "https://${{ secrets.ACTION_TOKEN }}@api.github.com/repos/${{ github.repository }}/statuses/$CURRENT_SHA" \
-                  --header 'Accept: application/vnd.github.antiope-preview+json' \
-                  --header 'Content-Type: application/json' \
-                    --data-raw '{
-                        "state": "success",
-                        "target_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                        "description": "sucess",
-                        "context": "ci-end"
-    
+      - name: sim finish
+        run: echo "ci-end"

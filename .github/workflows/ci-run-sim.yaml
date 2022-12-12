@@ -14,23 +14,11 @@ jobs:
     timeout-minutes: 5
     name: Simulate ci-run
     steps:
-      - name: Set Success Status
-        run:   |
-                CURRENT_SHA=$(git rev-parse HEAD)
-                echo "CURRENT_SHA: $CURRENT_SHA"
-                curl --location --request POST "https://${{ secrets.ACTION_TOKEN }}@api.github.com/repos/${{ github.repository }}/statuses/$CURRENT_SHA" \
-                  --header 'Accept: application/vnd.github.antiope-preview+json' \
-                  --header 'Content-Type: application/json' \
-                    --data-raw '{
-                        "state": "success",
-                        "target_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                        "description": "sucess",
-                        "context": "CI Status"
       - name: Merge Pull Request
         uses: juliangruber/merge-pull-request-action@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ steps.setup-workspace.outputs.pr-number }}
+          number: ${{ github.event.pull_request.number }}
           method: squash
       - name: Trigger workflow
         shell: bash
