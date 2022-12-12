@@ -7,12 +7,16 @@ pull_request_rules:
     conditions:
       - base=main
     actions:
-      comment:
-        message: Thank you for contributing! Your pull request is now being automatically merged.
+      queue:
+        name: default
+  - name: add 
+    conditions:
+      - base=main
+      - label=ready-to-merge
+    actions:
       label:
         add:
           - action-ci-run
-      queue:
-        name: default
+
 
     
