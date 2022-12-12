@@ -23,8 +23,7 @@ jobs:
       - name: Trigger workflow
         shell: bash
         run: |
-          PAYLOAD=""
-          URL="https://api.github.com/repos/${{ github.repository }}/actions/workflows/ci-end-sim/dispatches"
           set +e
-          curl --fail --silent --show-error -i -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github.v3+json" -X POST -d "${PAYLOAD}" "${URL}"
+          export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+          gh workflow run ci-end-sim.yaml --ref main
           fi
