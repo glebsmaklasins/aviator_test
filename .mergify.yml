@@ -1,0 +1,18 @@
+queue_rules:
+  - name: default
+    conditions:
+      - label=ready-to-merge
+pull_request_rules:
+  - name: Adding pull request in the queue
+    conditions:
+      - base=main
+    actions:
+      comment:
+        message: Thank you for contributing! Your pull request is now being automatically merged.
+      label:
+        add:
+          - action-ci-run
+      queue:
+        name: default
+
+    
