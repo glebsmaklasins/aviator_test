@@ -2,10 +2,6 @@ name: sim ci-end
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
-  pull_request:
-    branches:
-      - main
-    types: [labeled]
 
 jobs:
   sim-ci-run:
