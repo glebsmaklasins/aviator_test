@@ -1,0 +1,22 @@
+queue_rules:
+  - name: default
+    conditions:
+      - label=ready-to-merge
+pull_request_rules:
+  - name: Adding pull request in the queue
+    conditions:
+      - base=main
+    actions:
+      queue:
+        name: default
+  - name: add 
+    conditions:
+      - base=main
+      - label=ready-to-merge
+    actions:
+      label:
+        add:
+          - action-ci-run
+
+
+    
