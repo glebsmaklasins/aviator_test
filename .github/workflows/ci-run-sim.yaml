@@ -9,6 +9,7 @@ on: # yamllint disable-line rule:truthy
 
 jobs:
   sim-ci-run:
+    if: contains(github.event.pull_request.labels.*.name, 'action-ci-run')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     name: Simulate ci-run
