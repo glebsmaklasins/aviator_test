@@ -2,6 +2,12 @@ name: sim ci-end
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'pr number'
+        required: false
+        default: ''
+        type: string
 
 jobs:
   sim-ci-end:
@@ -12,5 +18,9 @@ jobs:
       - name: sim jenkins deploy
         shell: bash
         run: sleep 1m
+      - uses: actions-ecosystem/action-add-labels@v1
+        with:
+          number: ${{ github.event.inputs.pr_number }}
+          labels: ci-end-fail
       - name: sim finish
         run: echo "ci-end"

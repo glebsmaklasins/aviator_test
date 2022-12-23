@@ -25,5 +25,5 @@ jobs:
         run: |
           set +e
           export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-          gh workflow run ci-end-sim.yaml --ref main
+          gh workflow run ci-end-sim.yaml --ref main -f pr_number=${{ github.event.pull_request.number }}
           fi
