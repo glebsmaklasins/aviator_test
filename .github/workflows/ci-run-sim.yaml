@@ -24,6 +24,8 @@ jobs:
           method: squash
       - name: Trigger workflow
         shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set +e
           export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
