@@ -17,9 +17,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          PR_LIST=$(gh pr list -B main -s merged -L 1)
-          PR_NUMBER=( $PR_LIST[0] )
-          GET_LABEL=$(gh pr view "$PR_NUMBER")
+          # PR_LIST=$(gh pr list -B main -s merged -L 1)
+          # PR_NUMBER=( $PR_LIST[0] )
+          GET_LABEL=$(gh pr view ${{ github.event.pull_request.number }})
           if [[ "$GET_LABEL" == *ci-end-fail* ]]; then
             echo 'deploy failed'
             exit 1
