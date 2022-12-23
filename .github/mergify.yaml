@@ -1,18 +1,69 @@
 queue_rules:
   - name: default
     conditions:
-      - label=reqdy-to-merge
+      - label=ready-to-merge
 pull_request_rules:
-  - name: Adding pull request in the queue
+  - name: add to queue
     conditions:
+      -label=ready-to-merge
+    action:
+        queue:
+        name: default
+  - name: start ci
+    conditions: 
       - base=main
+      - queue-position=0
+      - label=ready-to-merge
     actions:
-      comment:
-        message: Thank you for contributing! Your pull request is now being automatically merged.
       label:
         add:
-          - action-ci-run
-      queue:
-        name: default
+          - mergify-queue
+          - label=action-ci-run
 
-    
+  # - name: Run ci
+  #   conditions:
+  #     - base=main
+  #     - queue-position=0
+  #     - label=ready-to-merge
+  #     - label=mergify-start
+  #   actions:
+  #     comment:
+  #       message: Thank you for contributing! Your pull request is now being automatically merged.
+  #     label:
+  #       add:
+  #         - action-ci-run
+  # - name: check ci-end
+  #   conditions:
+  #     - merged
+  #   actions:
+  #     comment:
+  #       message: pr failed on deploy step moved to second queue
+  #       label:
+  #         add:
+  #           - mergify-start
+  # - name: move pr to go next queue
+  #   conditions:
+  #     - base=main
+  #     - queue-position=0
+  #     - label=mq-next
+  #   actions:
+  #     comment:
+  #       message: pr failed on deploy step moved to second queue
+  #       label:
+  #         add:
+  #           - action-ci-run
+
+# //add a mergify-queue label to all queue PR
+# //on pos 0 and ci end not failed remove mergify queue label
+
+
+
+# // add action-ci-run only when the merged in pr has ci end label
+  
+
+#   // mergify adds prs to queue
+#   // first pr goes in 
+#   // mergify waits for  ci end to finish the update the position in the queue
+
+
+#   // ci-end labels pr it was triggerd with cd-success,cd-failure depending on the label it should move the queue-position  || move the next pr in to a new queue 
