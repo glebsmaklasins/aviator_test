@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: check last pr
         shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PR_LIST=$(gh pr list -B main -s merged -L 1)
           PR_NUMBER=( $PR_LIST[0] )
