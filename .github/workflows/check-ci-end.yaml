@@ -28,6 +28,10 @@ jobs:
           else
             echo 'continuing ...'
           fi
+      - name: start CI
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: action-ci-run
 
 
 
