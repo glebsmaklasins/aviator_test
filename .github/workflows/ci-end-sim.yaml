@@ -4,13 +4,13 @@ on: # yamllint disable-line rule:truthy
   workflow_dispatch:
 
 jobs:
-  sim-ci-run:
+  sim-ci-end:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     name: Simulate ci-end
     steps:
       - name: sim jenkins deploy
         shell: bash
-        run: sleep 10
+        run: sleep 1m
       - name: sim finish
         run: echo "ci-end"
