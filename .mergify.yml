@@ -3,20 +3,18 @@ queue_rules:
     conditions:
       - label=ready-to-merge
 pull_request_rules:
-  - name: Adding pull request in the queue
+  - name: add to queue
     conditions:
-      - base=main
+      - label=ready-to-merge
     actions:
       queue:
-        name: default
-  - name: add 
-    conditions:
+         name: default
+  - name: start ci
+    conditions: 
       - base=main
+      - queue-position=0
       - label=ready-to-merge
     actions:
       label:
         add:
-          - action-ci-run
-
-
-    
+        - check-ci-end
