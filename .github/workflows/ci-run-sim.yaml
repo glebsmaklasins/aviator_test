@@ -14,6 +14,8 @@ jobs:
     timeout-minutes: 5
     name: Simulate ci-run
     steps:
+      - name: checkout
+        uses: actions/checkout@v3
       - name: Merge Pull Request
         uses: juliangruber/merge-pull-request-action@v1
         with:
@@ -22,8 +24,10 @@ jobs:
           method: squash
       - name: Trigger workflow
         shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set +e
           export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-          gh workflow run ci-end-sim.yaml --ref main
+          gh workflow run ci-end-sim.yaml --ref main -f pr_number=${{ github.event.pull_request.number }}
           fi
